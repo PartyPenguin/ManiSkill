@@ -424,8 +424,7 @@ class SequentialTaskEnv(SceneManipulationEnv):
             <= ee_rest_thresh
         )
         robot_rest_dist = torch.abs(
-            self.agent.robot.qpos[env_idx, 3:-2] - self.resting_qpos,
-            dim=1,
+            self.agent.robot.qpos[env_idx, 3:-2] - self.resting_qpos
         )
         robot_rest = torch.all(
             robot_rest_dist < self.pick_cfg.robot_resting_qpos_diff, dim=1
@@ -462,8 +461,7 @@ class SequentialTaskEnv(SceneManipulationEnv):
             <= ee_rest_thresh
         )
         robot_rest_dist = torch.abs(
-            self.agent.robot.qpos[env_idx, 3:-2] - self.resting_qpos,
-            dim=1,
+            self.agent.robot.qpos[env_idx, 3:-2] - self.resting_qpos
         )
         robot_rest = torch.all(
             robot_rest_dist < self.pick_cfg.robot_resting_qpos_diff, dim=1
@@ -509,8 +507,7 @@ class SequentialTaskEnv(SceneManipulationEnv):
             <= ee_rest_thresh
         )
         robot_rest_dist = torch.abs(
-            self.agent.robot.qpos[env_idx, 3:-2] - self.resting_qpos,
-            dim=1,
+            self.agent.robot.qpos[env_idx, 3:-2] - self.resting_qpos
         )
         robot_rest = torch.all(
             robot_rest_dist < self.pick_cfg.robot_resting_qpos_diff, dim=1
