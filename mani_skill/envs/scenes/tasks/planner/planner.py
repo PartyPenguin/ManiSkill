@@ -44,6 +44,7 @@ class PickSubtaskConfig(SubtaskConfig):
     task_id: int = 0
     horizon: int = 200
     ee_rest_thresh: float = 0.05
+    robot_resting_qpos_diff: float = 0.1
 
     def __post_init__(self):
         assert self.ee_rest_thresh >= 0
@@ -67,6 +68,7 @@ class PlaceSubtaskConfig(SubtaskConfig):
     horizon: int = 200
     ee_rest_thresh: float = 0.05
     obj_goal_thresh: float = 0.15
+    robot_resting_qpos_diff: float = 0.1
 
     def __post_init__(self):
         assert self.obj_goal_thresh >= 0
@@ -92,6 +94,7 @@ class NavigateSubtaskConfig(SubtaskConfig):
     task_id: int = 2
     horizon: int = 200
     ee_rest_thresh: float = 0.05
+    robot_resting_qpos_diff: float = 0.1
     navigated_sucessfully_dist: float = 2
 
     def __post_init__(self):
