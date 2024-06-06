@@ -19,6 +19,14 @@ class MyEnv(StationaryManipulationEnv):
         # self._add_ground(render=self.bg_name is None)
         self.goal_site = self._build_sphere_site(self.goal_thresh)
 
+    def update_task(self):
+        goal_x = self._episode_rng.uniform(-0.5, 0.0)
+        goal_y = self._episode_rng.uniform(-0.5, 0.5)
+        goal_z = self._episode_rng.uniform(-0.2, 0.2)
+        self.goal_pos = np.hstack([goal_x, goal_y, goal_z])
+
+        self.goal_site.set_pose(Pose(self.goal_pos, [0, 1, 0, 0]))
+
     def _initialize_task(self):
         def random_quaternion():
             u1, u2, u3 = np.random.uniform(0, 1, 3)
@@ -37,9 +45,9 @@ class MyEnv(StationaryManipulationEnv):
         # Generate a random quaternion
         random_quaternion = random_quaternion()
 
-        goal_x = self._episode_rng.uniform(0.2, 0.5)
+        goal_x = self._episode_rng.uniform(-0.5, 0.5)
         goal_y = self._episode_rng.uniform(-0.5, 0.5)
-        goal_z = self._episode_rng.uniform(0.0, 0.5)
+        goal_z = self._episode_rng.uniform(-0.5, 0.5)
         self.goal_pos = np.hstack([goal_x, goal_y, goal_z])
 
         self.goal_site.set_pose(Pose(self.goal_pos, [0, 1, 0, 0]))
