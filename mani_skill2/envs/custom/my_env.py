@@ -66,7 +66,6 @@ class MyEnv(StationaryManipulationEnv):
             )
             self.agent.reset(qpos)
         self.agent.robot.set_pose(Pose([0, 0, 0]))
-        self.pinocchio_model = self.agent.robot.create_pinocchio_model()
 
     def _get_obs_extra(self) -> OrderedDict:
         obs = OrderedDict(
