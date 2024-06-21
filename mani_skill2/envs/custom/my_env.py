@@ -20,9 +20,9 @@ class MyEnv(StationaryManipulationEnv):
         self.goal_site = self._build_sphere_site(self.goal_thresh)
 
     def update_task(self):
-        goal_x = self._episode_rng.uniform(-0.5, 0.0)
+        goal_x = self._episode_rng.uniform(0.2, 0.5)
         goal_y = self._episode_rng.uniform(-0.5, 0.5)
-        goal_z = self._episode_rng.uniform(-0.2, 0.2)
+        goal_z = self._episode_rng.uniform(0, 0.5)
         self.goal_pos = np.hstack([goal_x, goal_y, goal_z])
 
         self.goal_site.set_pose(Pose(self.goal_pos, [0, 1, 0, 0]))
@@ -45,9 +45,9 @@ class MyEnv(StationaryManipulationEnv):
         # Generate a random quaternion
         random_quaternion = random_quaternion()
 
-        goal_x = self._episode_rng.uniform(-0.5, 0.5)
+        goal_x = self._episode_rng.uniform(0.2, 0.5)
         goal_y = self._episode_rng.uniform(-0.5, 0.5)
-        goal_z = self._episode_rng.uniform(-0.5, 0.5)
+        goal_z = self._episode_rng.uniform(0, 0.5)
         self.goal_pos = np.hstack([goal_x, goal_y, goal_z])
 
         self.goal_site.set_pose(Pose(self.goal_pos, [0, 1, 0, 0]))
@@ -66,11 +66,18 @@ class MyEnv(StationaryManipulationEnv):
             )
             self.agent.reset(qpos)
         self.agent.robot.set_pose(Pose([0, 0, 0]))
+        self.pinocchio_model = self.agent.robot.create_pinocchio_model()
 
     def _get_obs_extra(self) -> OrderedDict:
         obs = OrderedDict(
             tcp_pose=vectorize_pose(self.tcp.pose),
             goal_pose=vectorize_pose(self.goal_site.pose),
+            se3_joint_pose=np.asarray(
+                [
+                    vectorize_pose(self.agent.robot.get_joints()[i].get_global_pose())
+                    for i in range(len(self.agent.robot.get_qpos()))
+                ]
+            ).flatten(),
         )
         if self._obs_mode in ["state", "state_dict"]:
             obs.update(
